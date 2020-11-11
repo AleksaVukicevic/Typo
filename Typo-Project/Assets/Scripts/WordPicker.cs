@@ -1,20 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using TMPro;
 
 public class WordPicker : MonoBehaviour
 {
-    private string wordsFile = "words.json";
+    [SerializeField] private string wordsFile = "words.json";
+    [SerializeField] public TextMeshProUGUI wordText;
     private List<string> words;
 
-    void Start()
+    void Awake()
     {
         words = LoadWords();
-        print(words.Count);//For testing
     }
-    public string PickWord()
+
+    public string Pick()
     {
-        return words[Random.Range(0, words.Count)]; // Returns a random word from the array
+        string word = words[Random.Range(0, words.Count)];
+        wordText.text = word;
+        return word;
     }
     private List<string> LoadWords()
     {
