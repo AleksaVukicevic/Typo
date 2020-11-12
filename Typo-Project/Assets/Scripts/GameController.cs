@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,9 +30,9 @@ public class GameController : MonoBehaviour
         {
             print("Add score");
 
-            SetIndicatorColor(Color.green);
+            StartCoroutine(SetIndicatorColor(Color.green,0f));
             inputField.text = string.Empty;
-            Invoke("NextWord", delay);
+            NextWord();
         }
     }
     private void inputFocuser()
@@ -41,23 +42,25 @@ public class GameController : MonoBehaviour
             inputField.ActivateInputField();
         }
     }
+
     private void skipDetector()
     {
         if (inputField.text.Contains(" "))
         {
-            SetIndicatorColor(Color.red);
+            StartCoroutine(SetIndicatorColor(Color.red, 0f));
             inputField.text = string.Empty;
             Invoke("NextWord", delay);
         }
     }
-
-    private void SetIndicatorColor(Color color)
+    IEnumerator SetIndicatorColor(Color color, float time)
     {
+        yield return new WaitForSeconds(time);
         indicator.color = color;
     }
     private void NextWord()
     {
         word = wordPicker.Pick();
-        SetIndicatorColor(indicatorColor);
+        StartCoroutine(SetIndicatorColor(indicatorColor, 0.5f));
+
     }
 }
