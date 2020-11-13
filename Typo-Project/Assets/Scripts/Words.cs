@@ -134,7 +134,6 @@
     "fleet",
     "angle",
     "injury",
-    "sex",
     "mail",
     "rock",
     "kidnap",
