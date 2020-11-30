@@ -8,6 +8,7 @@ public class ScoreController : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private TextMeshProUGUI endScoreText;
     private GameController gameController;
 
     [Header("Score")]
@@ -37,14 +38,33 @@ public class ScoreController : MonoBehaviour
             {
                 time = 0;
                 countTime = false;
+                SoundsScript.ss.PlaySound("endBeeps");
                 Finish();
             }
             timeText.text = $"{time.ToString("F2")}s";
+            if (time < 3.1f && timeText.text == "3.00s" || timeText.text == "2.00s" || timeText.text == "1.00s")
+            {
+                SoundsScript.ss.PlaySound("smallBeep");
+            }
         }
     }
     private void Finish()
     {
-        gameController.End();
+        endScoreText.text = $"Score     <b>{score}";
+
+        if (PlayerPrefs.HasKey("bestScore"))
+        {
+            if(PlayerPrefs.GetInt("bestScore") < score)
+            {
+                PlayerPrefs.SetInt("bestScore", score);
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetInt("bestScore", score);
+        }
+
+        StartCoroutine(gameController.End());
     }
     public void AddScore(int value)
     {

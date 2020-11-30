@@ -10,7 +10,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private Image indicator;
+    [SerializeField] private GameObject endScreen;
     private ScoreController scoreController;
+    [SerializeField] private SceneController sceneController;
 
     [Header("Other")]
     [SerializeField] private Color indicatorColor;
@@ -29,20 +31,42 @@ public class GameController : MonoBehaviour
         inputField.enabled = false;
         countdownText.fontSize = 200;
         countdownText.text = "Get Ready";
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
+        SoundsScript.ss.PlaySound("beep");
+        yield return new WaitForSeconds(1);
+        SoundsScript.ss.PlaySound("beep");
         countdownText.fontSize = 400;
         countdownText.text = "3";
         yield return new WaitForSeconds(1);
+        SoundsScript.ss.PlaySound("beep");
         countdownText.text = "2";
         yield return new WaitForSeconds(1);
+        SoundsScript.ss.PlaySound("beep");
         countdownText.text = "1";
         yield return new WaitForSeconds(1);
+        SoundsScript.ss.PlaySound("start");
         countdownText.text = "GO";
         NextWord();
         scoreController.countTime = true;
         inputField.enabled = true;
         yield return new WaitForSeconds(1);
         countdownText.gameObject.SetActive(false);
+    }
+    public IEnumerator End()
+    {
+        countdownText.gameObject.SetActive(true);
+        countdownText.fontSize = 200;
+        countdownText.text = "Time out";
+        inputField.enabled = false;
+        yield return new WaitForSeconds(2.5f);
+        endScreen.SetActive(true);
+        yield return new WaitForSeconds(1);
+        countdownText.gameObject.SetActive(false);
+    }
+
+    public void ContinueButton()
+    {
+        sceneController.LoadScene("Menu");
     }
 
     private void Update()
@@ -57,17 +81,11 @@ public class GameController : MonoBehaviour
                 scoreController.AddScore(word.Length);
 
                 StartCoroutine(SetIndicatorColor(Color.green, 0f));
+                SoundsScript.ss.PlaySound("correct");
                 inputField.text = string.Empty;
                 NextWord();
             }
         }
-    }
-    public void End()
-    {
-        countdownText.gameObject.SetActive(true);
-        countdownText.fontSize = 200;
-        countdownText.text = "Time out";
-        inputField.enabled = false;
     }
     private void inputFocuser()
     {
@@ -82,6 +100,7 @@ public class GameController : MonoBehaviour
         if (inputField.text.Contains(" "))
         {
             StartCoroutine(SetIndicatorColor(Color.red, 0f));
+            SoundsScript.ss.PlaySound("error");
             inputField.text = string.Empty;
             Invoke("NextWord", delay);
         }
