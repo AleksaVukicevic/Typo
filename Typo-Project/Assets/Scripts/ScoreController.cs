@@ -24,7 +24,7 @@ public class ScoreController : MonoBehaviour
         gameController = GetComponent<GameController>();
         scoreText.text = score.ToString();
         time = startTime;
-        timeText.text = $"{time.ToString("F2")}s";
+        timeText.text = $"{time.ToString("F1")}s";
     }
     private void Update()
     {
@@ -41,11 +41,11 @@ public class ScoreController : MonoBehaviour
                 SoundsScript.ss.PlaySound("endBeeps");
                 Finish();
             }
-            timeText.text = $"{time.ToString("F2")}s";
-            if (time < 3.1f && timeText.text == "3.00s" || timeText.text == "2.00s" || timeText.text == "1.00s")
-            {
-                SoundsScript.ss.PlaySound("smallBeep");
-            }
+            timeText.text = $"{time.ToString("F1")}s";
+            //if (time < 3.1f && timeText.text == "3.0s" || timeText.text == "2.0s" || timeText.text == "1.0s")
+            //{
+            //    SoundsScript.ss.PlaySound("smallBeep");
+            //}
         }
     }
     private void Finish()
