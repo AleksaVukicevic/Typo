@@ -8,6 +8,12 @@ public class MenuScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bestScoreText;
     void Start()
     {
-        bestScoreText.text = $"Best     <b>{PlayerPrefs.GetInt("bestScore")}";
+        int best = PlayerPrefs.GetInt("bestScore");
+        if(best > 1)
+        {
+            bestScoreText.text = $"Best     <b>{best}";
+            //PlayGamesScript.PostScoreToLeaderboard(best);
+        }
+        
     }
 }
