@@ -57,11 +57,13 @@ public class ScoreController : MonoBehaviour
             if(PlayerPrefs.GetInt("bestScore") < score)
             {
                 PlayerPrefs.SetInt("bestScore", score);
+                PlayGamesScript.PostScoreToLeaderboard(score);
             }
         }
         else
         {
             PlayerPrefs.SetInt("bestScore", score);
+            PlayGamesScript.PostScoreToLeaderboard(score);
         }
 
         StartCoroutine(gameController.End());

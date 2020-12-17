@@ -14,6 +14,5 @@ public class MenuScript : MonoBehaviour
             bestScoreText.text = $"Best     <b>{best}";
             //PlayGamesScript.PostScoreToLeaderboard(best);
         }
-        
     }
 }

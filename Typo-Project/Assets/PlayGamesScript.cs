@@ -27,11 +27,11 @@ public class PlayGamesScript : MonoBehaviour
         {
             if (result == SignInStatus.Success)
             {
-                debugText.text = "Logged in";
+                debugText.text = $"Signed in. Status: {result}, future scores will be submitted";
             }
             else if (result == SignInStatus.Failed)
             {
-                debugText.text = "Error loging in";
+                debugText.text = $"Error Signing in. Status: {result}, Scores won't be submitted.";
             }
         });
 
@@ -55,11 +55,11 @@ public class PlayGamesScript : MonoBehaviour
         {
             if (result == SignInStatus.Success)
             {
-                debugText.text = "Logged in";
+                debugText.text = $"Signed in. Status: {result}";
             }
             else if (result == SignInStatus.Failed)
             {
-                debugText.text = "Error loging in";
+                debugText.text = $"Error Signing in. Status: {result}";
             }
         });
 
