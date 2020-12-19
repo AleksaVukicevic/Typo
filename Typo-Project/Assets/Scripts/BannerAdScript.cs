@@ -38,6 +38,22 @@ public class BannerAdScript : MonoBehaviour
             Advertisement.Banner.Show(placementId);
         }
     }
+    public IEnumerator ShowBannerWhenInitializedEvenIfClosed()
+    {
+        while (!Advertisement.isInitialized)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        if (position == PositionEnum.top)
+        {
+            Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
+        }
+        else
+        {
+            Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+        }
+        Advertisement.Banner.Show(placementId);
+    }
 
     public void CloseAd()
     {

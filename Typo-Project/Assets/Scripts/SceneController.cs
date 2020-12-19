@@ -11,6 +11,10 @@ public class SceneController : MonoBehaviour
     {
         StartCoroutine(LoadScene_(sceneName));
     }
+    public void LoadSceneNoDelay(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
     private IEnumerator LoadScene_(string sceneName)
     {
         yield return new WaitForSeconds(loadDelay);
