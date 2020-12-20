@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class MultiplayerGameController : MonoBehaviour
 {
+    public int health = 100;
+    [SerializeField] private Slider healthSlider;
+    public int enemyHealth = 100;
+    [SerializeField] private Slider enemyHealthSlider;
+    [SerializeField] private TextMeshProUGUI winLoseText;
     [Header("Refs")]
     [SerializeField] private WordPicker wordPicker;
     [SerializeField] private TMP_InputField inputField;
@@ -20,6 +25,7 @@ public class MultiplayerGameController : MonoBehaviour
     [SerializeField] private Color indicatorColor;
     [SerializeField] private float delay;
     [SerializeField] private bool gameOn;
+    public bool gameStarted;
 
     public string word;
 
@@ -34,6 +40,12 @@ public class MultiplayerGameController : MonoBehaviour
     {
         bannerAdScript.CloseAd();
         photonNetworking.roomMenu.SetActive(false);
+        endScreen.SetActive(false);
+        gameStarted = true;
+        health = 100;
+        enemyHealth = 100;
+        healthSlider.value = 100;
+        enemyHealthSlider.value = 100;
         StartCoroutine(Countdown());
     }
 
@@ -66,9 +78,12 @@ public class MultiplayerGameController : MonoBehaviour
     }
     public IEnumerator End()
     {
+        gameStarted = false;
+        gameOn = false;
+        SoundsScript.ss.PlaySound("endBeeps");
         countdownText.gameObject.SetActive(true);
         countdownText.fontSize = 200;
-        countdownText.text = "Time out";
+        countdownText.text = "KO";
         inputField.enabled = false;
         yield return new WaitForSeconds(2.5f);
         endScreen.SetActive(true);
@@ -93,6 +108,7 @@ public class MultiplayerGameController : MonoBehaviour
             if (inputField.text.ToLower() == word.ToLower())
             {
                 //Send damage
+                photonNetworking.SendDataDamage(word.Length);
 
                 StartCoroutine(SetIndicatorColor(Color.green, 0f));
                 SoundsScript.ss.PlaySound("correct");
@@ -100,6 +116,42 @@ public class MultiplayerGameController : MonoBehaviour
                 NextWord();
             }
         }
+    }
+    public void Damage(int value)
+    {
+        health -= value;
+        healthSlider.value = health;
+        if (health <= 0)
+        {
+            Dead();
+        }
+    }
+    public void DamageEnemy(int value)
+    {
+        enemyHealth -= value;
+        enemyHealthSlider.value = enemyHealth;
+        if (enemyHealth <= 0)
+        {
+            Win();
+        }
+    }
+    public void Win()
+    {
+        winLoseText.text = "You WIN";
+        winLoseText.color = new Color(1, 0.65f, 0);
+
+        StopAllCoroutines();
+        gameOn = false;
+        inputField.enabled = false;
+        countdownText.gameObject.SetActive(false);
+
+        StartCoroutine(End());
+    }
+    public void Dead()
+    {
+        winLoseText.text = "You LOSE";
+        winLoseText.color = Color.red;
+        StartCoroutine(End());
     }
     private void inputFocuser()
     {

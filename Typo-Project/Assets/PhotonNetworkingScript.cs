@@ -12,18 +12,21 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	[SerializeField] private GameObject fadeOut;
 	[SerializeField] private GameObject connectingMenu;
 	[SerializeField] private SceneController sceneController;
+	[SerializeField] private MultiplayerGameController gameController;
 	[Header("Menu")]
 	[SerializeField] private GameObject multiplayerMenu;
 	[SerializeField] private TMP_InputField roomNameInput;
 	[SerializeField] private TMP_InputField playerNameInput;
 	[Header("Room")]
 	[SerializeField] private GameObject startGameButton;
+	[SerializeField] private TMP_InputField chatInput;
 	public GameObject roomMenu;
 	public TextMeshProUGUI roomText;
 	public TextMeshProUGUI roomLog;
 
 	void Start()
 	{
+		gameController = GetComponent<MultiplayerGameController>();
 		pv = GetComponent<PhotonView>();
 		connectingMenu.SetActive(true);
 		ConnectToMaster();
@@ -45,7 +48,15 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 		connectingMenu.SetActive(false);
 		multiplayerMenu.SetActive(true);
 
-		PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
+        if (PlayerPrefs.HasKey("PlayerName"))
+        {
+			PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName");
+		}
+        else
+        {
+			PhotonNetwork.NickName = "Player " + Random.Range(0, 1000).ToString("0000");
+		}
+	
 		playerNameInput.text = PhotonNetwork.NickName;
 		print($"Connected as {PhotonNetwork.NickName}");		
 	}
@@ -55,6 +66,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 		if(playerNameInput.text != string.Empty)
         {
 			PhotonNetwork.NickName = playerNameInput.text;
+			PlayerPrefs.SetString("PlayerName", PhotonNetwork.NickName);
 			print($"Name changed to {PhotonNetwork.NickName}");
 		}	
 	}
@@ -76,8 +88,11 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
-		fadeOut.SetActive(true);
-		sceneController.LoadScene("Menu");
+		if(cause == DisconnectCause.DisconnectByClientLogic)
+        {
+			fadeOut.SetActive(true);
+			sceneController.LoadScene("Menu");
+		}		
     }
     public void CreateRoom()
 	{
@@ -112,9 +127,26 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	}
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{
-		print($"{otherPlayer.NickName} Left The Game");
-		roomLog.text += $"\n{otherPlayer.NickName} left.";
+        if (gameController.gameStarted)
+        {
+			gameController.Win();
+			roomLog.text += $"\n{otherPlayer.NickName} left.";
+		}
+        else
+        {
+			print($"{otherPlayer.NickName} Left The Game");
+			roomLog.text += $"\n{otherPlayer.NickName} left.";
+		}
 	}
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if(newMasterClient == PhotonNetwork.LocalPlayer)
+        {
+			startGameButton.SetActive(true);
+		}
+		roomLog.text += $"\n{newMasterClient.NickName} is the host.";
+	}
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
 		print($"{newPlayer.NickName} Joined The Game");
@@ -125,17 +157,61 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 			roomLog.text += "\n Room is full. Room creator can start the game.";
 		}	
 	}
+	
 
-    public void SendData(int data)
+
+
+	public void Chat()
     {
-		pv.RPC("ReceiveData", RpcTarget.Others, data);
-		print($"Sent data: {data}");
+		if(chatInput.text != "")
+        {
+			string message = $"\n<{PhotonNetwork.NickName}> {chatInput.text}";
+
+			roomLog.text += message;
+			SendDataChat(message);
+
+			chatInput.text = "";
+		}
+    }
+
+	public void SendDataChat(string msg)
+	{
+		pv.RPC("ReceiveChat", RpcTarget.Others, msg);
+	}
+	public void SendDataDamage(int value)
+    {
+		pv.RPC("ReceiveDamage", RpcTarget.Others, value);
+		gameController.DamageEnemy(value);
+		print($"Sent damage: {value}");
+	}
+	public void SendStartGameSignal()
+	{
+		if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+		{
+			pv.RPC("ReceiveGameStart", RpcTarget.All);
+			print($"Sent signal: start game");
+		}
+        else
+        {
+			roomLog.text += "\n Not enough players.";
+        }
 	}
 
 	[PunRPC]
-	public void ReceiveData(int data)
+	public void ReceiveDamage(int data)
 	{
-		//gameScript.DisplayTaps(data);
-		print($"Recived data: {data}");
+		print($"Recived Damage: {data}");
+		gameController.Damage(data);
+	}
+	[PunRPC]
+	public void ReceiveGameStart()
+	{
+		print($"Recived signal: start game");
+		gameController.StartTheGame();
+	}
+	[PunRPC]
+	public void ReceiveChat(string msg)
+	{
+		roomLog.text += msg;
 	}
 }
