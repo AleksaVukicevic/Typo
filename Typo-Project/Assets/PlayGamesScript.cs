@@ -83,13 +83,38 @@ public class PlayGamesScript : MonoBehaviour
             if (success)
             {
                 print("Score posted");
-
             }
             else
             {
                 Debug.LogError("Error posting score");
             }
         });
+    }
+    public static long LoadScoreFromLeaderboard()
+    {
+        long val = 0;
+        PlayGamesPlatform.Instance.LoadScores(
+
+             GPGSIds.leaderboard_high_score_60s,
+             LeaderboardStart.PlayerCentered,
+             1,
+             LeaderboardCollection.Public,
+             LeaderboardTimeSpan.AllTime,
+         (LeaderboardScoreData data) => {
+             Debug.Log(data.Valid);
+             Debug.Log(data.Id);
+             Debug.Log(data.PlayerScore);
+             Debug.Log(data.PlayerScore.userID);
+             Debug.Log(data.PlayerScore.formattedValue);
+                     val = data.PlayerScore.value;
+         });
+        
+        return val;
+    }
+
+    public static bool IsAuthenticated()
+    {
+        return PlayGamesPlatform.Instance.IsAuthenticated();
     }
 
     public void ShowLeaderboard()

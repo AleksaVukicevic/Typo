@@ -20,6 +20,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	[Header("Room")]
 	[SerializeField] private GameObject startGameButton;
 	[SerializeField] private TMP_InputField chatInput;
+	[SerializeField] private TextMeshProUGUI playersText;
 	public GameObject roomMenu;
 	public TextMeshProUGUI roomText;
 	public TextMeshProUGUI roomLog;
@@ -88,11 +89,12 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
-		if(cause == DisconnectCause.DisconnectByClientLogic)
-        {
-			fadeOut.SetActive(true);
-			sceneController.LoadScene("Menu");
-		}		
+		fadeOut.SetActive(true);
+		sceneController.LoadScene("Menu");
+		//if (cause == DisconnectCause.DisconnectByClientLogic)
+  //      {
+
+		//}		
     }
     public void CreateRoom()
 	{
@@ -120,6 +122,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 		roomText.text = PhotonNetwork.CurrentRoom.Name;
 		roomLog.text = "";
 		roomLog.text += $"\n{PhotonNetwork.NickName} joined.";
+		playersText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
 	}
 	public override void OnCreateRoomFailed(short returnCode, string message)
 	{
@@ -130,13 +133,9 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
         if (gameController.gameStarted)
         {
 			gameController.Win();
-			roomLog.text += $"\n{otherPlayer.NickName} left.";
 		}
-        else
-        {
-			print($"{otherPlayer.NickName} Left The Game");
-			roomLog.text += $"\n{otherPlayer.NickName} left.";
-		}
+		roomLog.text += $"\n{otherPlayer.NickName} left.";
+		playersText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
 	}
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
@@ -149,12 +148,12 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-		print($"{newPlayer.NickName} Joined The Game");
 		roomLog.text += $"\n{newPlayer.NickName} joined.";
+		playersText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+		if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
-			roomLog.text += "\n Room is full. Room creator can start the game.";
+			roomLog.text += "\n\n Room is full. Room creator can start the game.\n";
 		}	
 	}
 	
