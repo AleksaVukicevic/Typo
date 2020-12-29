@@ -22,7 +22,6 @@ public class PlayGamesScript : MonoBehaviour
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
         PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.Activate();
-
         PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptOnce, (result) =>
         {
             if (result == SignInStatus.Success)
@@ -101,11 +100,11 @@ public class PlayGamesScript : MonoBehaviour
              LeaderboardCollection.Public,
              LeaderboardTimeSpan.AllTime,
          (LeaderboardScoreData data) => {
-             Debug.Log(data.Valid);
-             Debug.Log(data.Id);
-             Debug.Log(data.PlayerScore);
-             Debug.Log(data.PlayerScore.userID);
-             Debug.Log(data.PlayerScore.formattedValue);
+             //Debug.Log(data.Valid);
+             //Debug.Log(data.Id);
+             //Debug.Log(data.PlayerScore);
+             //Debug.Log(data.PlayerScore.userID);
+             //Debug.Log(data.PlayerScore.formattedValue);
                      val = data.PlayerScore.value;
          });
         
@@ -120,5 +119,17 @@ public class PlayGamesScript : MonoBehaviour
     public void ShowLeaderboard()
     {
         PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_high_score_60s);
+    }
+
+    public void SignInOut()
+    {
+        if (IsAuthenticated())
+        {
+            PlayGamesPlatform.Instance.SignOut();
+        }
+        else
+        {
+            LogIn();
+        }
     }
 }

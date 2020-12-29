@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class MenuScript : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI bestScoreText;
+    [SerializeField] private TextMeshProUGUI signedInText;
+    [SerializeField] private Image signedInImage;
     void Start()
     {
         if (PlayerPrefs.HasKey("bestScore"))
@@ -26,4 +29,25 @@ public class MenuScript : MonoBehaviour
             }
         }
     }
+
+
+    public void OpenOptionsMenu()
+    {   
+        if (PlayGamesScript.IsAuthenticated())
+        {
+            signedInImage.color = Color.green;
+            signedInText.text = "Sign out";
+        }
+        else
+        {
+            signedInImage.color = Color.red;
+            signedInText.text = "Sign in";
+        }
+    }
+
+    public void OpenPrivacyPolicy()
+    {
+        Application.OpenURL("https://typogame.wordpress.com/privacy-policy/");
+    }
+
 }
