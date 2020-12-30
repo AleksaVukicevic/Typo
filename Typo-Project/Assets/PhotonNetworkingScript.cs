@@ -14,6 +14,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	[SerializeField] private SceneController sceneController;
 	[SerializeField] private MultiplayerGameController gameController;
 	[Header("Menu")]
+	[SerializeField] private TextMeshProUGUI errorText;
 	[SerializeField] private GameObject multiplayerMenu;
 	[SerializeField] private TMP_InputField roomNameInput;
 	[SerializeField] private TMP_InputField playerNameInput;
@@ -34,18 +35,18 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	}
 	public void ConnectToMaster()
     {
-		print("Connecting to Master");
+		//Debug.Log("Connecting to Master");
 		PhotonNetwork.ConnectUsingSettings();
 	}
 
     public override void OnConnectedToMaster()
 	{
-		print("Connected to Master");
+		//print("Connected to Master");
 		PhotonNetwork.JoinLobby();
 	}
 	public override void OnJoinedLobby()
 	{
-		print("Joined Lobby");
+		//print("Joined Lobby");
 		connectingMenu.SetActive(false);
 		multiplayerMenu.SetActive(true);
 
@@ -59,7 +60,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 		}
 	
 		playerNameInput.text = PhotonNetwork.NickName;
-		print($"Connected as {PhotonNetwork.NickName}");		
+		//print($"Connected as {PhotonNetwork.NickName}");		
 	}
 
 	public void ChangePlayerName()
@@ -68,7 +69,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
         {
 			PhotonNetwork.NickName = playerNameInput.text;
 			PlayerPrefs.SetString("PlayerName", PhotonNetwork.NickName);
-			print($"Name changed to {PhotonNetwork.NickName}");
+			//print($"Name changed to {PhotonNetwork.NickName}");
 		}	
 	}
 
@@ -78,7 +79,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	}
 	public void LeaveRoom()
 	{
-		print("You left");
+		//print("You left");
 		multiplayerMenu.SetActive(true);
 		roomMenu.SetActive(false);
 		PhotonNetwork.LeaveRoom();
@@ -90,11 +91,7 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
 		fadeOut.SetActive(true);
-		sceneController.LoadScene("Menu");
-		//if (cause == DisconnectCause.DisconnectByClientLogic)
-  //      {
-
-		//}		
+		sceneController.LoadScene("Menu");	
     }
     public void CreateRoom()
 	{
@@ -102,11 +99,11 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 		{
 			return;
 		}
-		PhotonNetwork.JoinOrCreateRoom(roomNameInput.text, new RoomOptions { MaxPlayers = 2 }, TypedLobby.Default);
+		PhotonNetwork.CreateRoom(roomNameInput.text, new RoomOptions { MaxPlayers = 2 }, TypedLobby.Default);
 	}
 	public override void OnJoinedRoom()
     {
-		print($"Joined room {PhotonNetwork.CurrentRoom.Name}");
+		//print($"Joined room {PhotonNetwork.CurrentRoom.Name}");
 		multiplayerMenu.SetActive(false);
 		roomMenu.SetActive(true);
 
@@ -126,7 +123,11 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	}
 	public override void OnCreateRoomFailed(short returnCode, string message)
 	{
-		Debug.LogError("Room Creation Failed: " + message);
+		errorText.text = message;
+	}
+	public override void OnJoinRoomFailed(short returnCode, string message)
+	{
+		errorText.text = message;
 	}
 	public override void OnPlayerLeftRoom(Player otherPlayer)
 	{
@@ -181,14 +182,14 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
     {
 		pv.RPC("ReceiveDamage", RpcTarget.Others, value);
 		gameController.DamageEnemy(value);
-		print($"Sent damage: {value}");
+		//print($"Sent damage: {value}");
 	}
 	public void SendStartGameSignal()
 	{
 		if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
 		{
 			pv.RPC("ReceiveGameStart", RpcTarget.All);
-			print($"Sent signal: start game");
+			//print($"Sent signal: start game");
 		}
         else
         {
@@ -199,13 +200,13 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	[PunRPC]
 	public void ReceiveDamage(int data)
 	{
-		print($"Recived Damage: {data}");
+		//print($"Recived Damage: {data}");
 		gameController.Damage(data);
 	}
 	[PunRPC]
 	public void ReceiveGameStart()
 	{
-		print($"Recived signal: start game");
+		//print($"Recived signal: start game");
 		gameController.StartTheGame();
 	}
 	[PunRPC]

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
@@ -10,7 +9,7 @@ using TMPro;
 
 public class PlayGamesScript : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI debugText;
+   // public static TextMeshProUGUI debugText;
 
     private void Start()
     {
@@ -26,11 +25,11 @@ public class PlayGamesScript : MonoBehaviour
         {
             if (result == SignInStatus.Success)
             {
-                debugText.text = $"Signed in. Status: {result}, future scores will be submitted";
+                //debugText.text = $"Signed in. Status: {result}, future scores will be submitted";
             }
             else if (result == SignInStatus.Failed)
             {
-                debugText.text = $"Error Signing in. Status: {result}, Scores won't be submitted.";
+               // debugText.text = $"Error Signing in. Status: {result}, Scores won't be submitted.";
             }
         });
 
@@ -48,31 +47,24 @@ public class PlayGamesScript : MonoBehaviour
 
     }
 
-    public void LogIn()
+    public static bool SignIn()
     {
+        bool finish = false;
+
         PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.CanPromptAlways, (result) =>
         {
             if (result == SignInStatus.Success)
             {
-                debugText.text = $"Signed in. Status: {result}";
+                //debugText.text = $"Signed in. Status: {result}";
+                finish = true;
             }
-            else if (result == SignInStatus.Failed)
+            else
             {
-                debugText.text = $"Error Signing in. Status: {result}";
+                //debugText.text = $"Error Signing in. Status: {result}";
+                finish = false;
             }
         });
-
-        //Social.localUser.Authenticate((bool success) =>
-        //{
-        //    if (success == true)
-        //    {
-        //        debugText.text = "Logged in";
-        //    }
-        //    else
-        //    {
-        //        debugText.text = "Error loging in";
-        //    }
-        //});
+        return finish;
     }
 
     public static void PostScoreToLeaderboard(long score)
@@ -121,15 +113,16 @@ public class PlayGamesScript : MonoBehaviour
         PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_high_score_60s);
     }
 
-    public void SignInOut()
+    public static bool SignInOut()
     {
         if (IsAuthenticated())
         {
             PlayGamesPlatform.Instance.SignOut();
+            return false;
         }
         else
-        {
-            LogIn();
+        { 
+            return SignIn();
         }
     }
 }

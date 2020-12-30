@@ -49,5 +49,12 @@ public class MenuScript : MonoBehaviour
     {
         Application.OpenURL("https://typogame.wordpress.com/privacy-policy/");
     }
-
+    public void Support()
+    {
+        Application.OpenURL("https://www.buymeacoffee.com/AleksaVuk");
+    }
+    public void SignInAndOutButton()
+    {
+        signedInImage.color = PlayGamesScript.SignInOut() ? Color.green : Color.red;
+    }
 }
