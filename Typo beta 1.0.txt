@@ -1,0 +1,4 @@
+Changes in 1.8 alpha:
+*Testing loading score from leaderboard.
+Testing Google Play Services button color change.
+Added error text on fail to join or create the room.

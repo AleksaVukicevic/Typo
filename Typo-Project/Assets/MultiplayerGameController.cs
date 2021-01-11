@@ -182,4 +182,10 @@ public class MultiplayerGameController : MonoBehaviour
         StartCoroutine(SetIndicatorColor(indicatorColor, 0.5f));
 
     }
+
+    public void ResetGameTexts()
+    {
+        inputField.text = "";
+        wordPicker.wordText.text = "?";
+    }
 }

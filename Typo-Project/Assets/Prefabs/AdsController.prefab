@@ -46,4 +46,5 @@ MonoBehaviour:
   position: 0
   gameId: 3922655
   placementId: banner
-  testMode: 1
+  testMode: 0
+  closed: 0

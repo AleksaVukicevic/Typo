@@ -2651,16 +2651,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1450578005}
     - target: {fileID: 7175158491375266300, guid: 489245c6c2b44d24d95ebc42c8c137ed,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: 
+      value: ResetGameTexts
       objectReference: {fileID: 0}
     - target: {fileID: 7175158491375266300, guid: 489245c6c2b44d24d95ebc42c8c137ed,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: 
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7175158491375266300, guid: 489245c6c2b44d24d95ebc42c8c137ed,
         type: 3}
@@ -2864,6 +2864,18 @@ MonoBehaviour:
   roomMenu: {fileID: 1792221592}
   roomText: {fileID: 888753804}
   roomLog: {fileID: 6529500977506451314}
+--- !u!114 &1450578005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3386749540216512597, guid: cc8da8c85b0941f428fb47a7da3240c2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3386749539079147325}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450578002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f1db36431ff044f8ac688772f69c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1538461016
 GameObject:
   m_ObjectHideFlags: 0

@@ -208,10 +208,11 @@ public class PhotonNetworkingScript : MonoBehaviourPunCallbacks
 	{
 		//print($"Recived signal: start game");
 		gameController.StartTheGame();
+		gameController.ResetGameTexts();
 	}
 	[PunRPC]
 	public void ReceiveChat(string msg)
 	{
-		roomLog.text += msg;
+		roomLog.text += msg;		
 	}
 }

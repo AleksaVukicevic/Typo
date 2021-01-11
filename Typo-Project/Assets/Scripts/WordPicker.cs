@@ -5,7 +5,7 @@ using TMPro;
 
 public class WordPicker : MonoBehaviour
 {
-    [SerializeField] public TextMeshProUGUI wordText;
+    public TextMeshProUGUI wordText;
     private string lastWord;
     public string Pick()
     {
