@@ -2114,7 +2114,7 @@ PrefabInstance:
     - target: {fileID: 2320326985800264418, guid: 31c4a1ab9a48dc74ba93470861679558,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2320326985800264428, guid: 31c4a1ab9a48dc74ba93470861679558,
         type: 3}
@@ -2125,6 +2125,11 @@ PrefabInstance:
         type: 3}
       propertyPath: placementId
       value: bannerMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320326985800264428, guid: 31c4a1ab9a48dc74ba93470861679558,
+        type: 3}
+      propertyPath: testMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
         type: 3}
