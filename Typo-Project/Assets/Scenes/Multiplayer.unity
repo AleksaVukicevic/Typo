@@ -1195,18 +1195,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 3156241887424325402}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &400622067 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2320326985800264428, guid: 31c4a1ab9a48dc74ba93470861679558,
-    type: 3}
-  m_PrefabInstance: {fileID: 2320326987498318085}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f460db45a24569a499fc454ff0b6a587, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &472380173 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 343731351728889239, guid: 2a5722e965d5e184887eff69f68cb5e8,
@@ -3676,6 +3664,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798513211}
   m_CullTransparentMesh: 0
+--- !u!1 &1811301351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1811301352}
+  - component: {fileID: 1811301353}
+  m_Layer: 0
+  m_Name: AdsController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1811301352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811301351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1811301353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1811301351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a843287a491ac6043a68fe5115604e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameId: 3922655
+  placementId: multiplayerVideo
+  testMode: 0
 --- !u!1001 &1832488035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5188,85 +5222,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1015e47192509764f8f260ce0c33b436, type: 3}
---- !u!1001 &2320326987498318085
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2320326985800264418, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_Name
-      value: AdsController
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264418, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264428, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: position
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2320326985800264429, guid: 31c4a1ab9a48dc74ba93470861679558,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 31c4a1ab9a48dc74ba93470861679558, type: 3}
 --- !u!1001 &3156241887424325402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5482,7 +5437,7 @@ PrefabInstance:
         type: 3}
       propertyPath: bannerAdScript
       value: 
-      objectReference: {fileID: 400622067}
+      objectReference: {fileID: 0}
     - target: {fileID: 3386749540216512597, guid: cc8da8c85b0941f428fb47a7da3240c2,
         type: 3}
       propertyPath: endScreen
@@ -5508,6 +5463,11 @@ PrefabInstance:
       propertyPath: winLoseText
       value: 
       objectReference: {fileID: 1313255409}
+    - target: {fileID: 3386749540216512597, guid: cc8da8c85b0941f428fb47a7da3240c2,
+        type: 3}
+      propertyPath: videoAdScript
+      value: 
+      objectReference: {fileID: 1811301353}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc8da8c85b0941f428fb47a7da3240c2, type: 3}
 --- !u!1001 &5016152869873051010

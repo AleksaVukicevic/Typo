@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject endScreen;
     private ScoreController scoreController;
     [SerializeField] private SceneController sceneController;
-    [SerializeField] private BannerAdScript bannerAdScript;
+    [SerializeField] private VideoAdScript videoAdScript;
 
     [Header("Other")]
     [SerializeField] private Color indicatorColor;
@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         endScreen.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        bannerAdScript.gameObject.SetActive(true);
+        videoAdScript.ShowVideoAd();
         yield return new WaitForSeconds(0.5f);
         countdownText.gameObject.SetActive(false);
     }

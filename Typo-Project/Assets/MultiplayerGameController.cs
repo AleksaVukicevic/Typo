@@ -16,7 +16,7 @@ public class MultiplayerGameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private Image indicator;
     [SerializeField] private SceneController sceneController;
-    [SerializeField] private BannerAdScript bannerAdScript;
+    [SerializeField] private VideoAdScript videoAdScript;
 
     private PhotonNetworkingScript photonNetworking;
     [SerializeField] private GameObject endScreen;
@@ -33,12 +33,10 @@ public class MultiplayerGameController : MonoBehaviour
     {
         photonNetworking = GetComponent<PhotonNetworkingScript>();
 
-        bannerAdScript.gameObject.SetActive(true);
         inputField.enabled = false;
     }
     public void StartTheGame()
     {
-        bannerAdScript.CloseAd();
         photonNetworking.roomMenu.SetActive(false);
         endScreen.SetActive(false);
         gameStarted = true;
@@ -88,7 +86,7 @@ public class MultiplayerGameController : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         endScreen.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        StartCoroutine(bannerAdScript.ShowBannerWhenInitializedEvenIfClosed());
+        videoAdScript.ShowVideoAd();
         yield return new WaitForSeconds(0.5f);
         countdownText.gameObject.SetActive(false);
     }

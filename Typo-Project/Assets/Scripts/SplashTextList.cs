@@ -14,6 +14,8 @@
     "Going Fast!",
     "Nice shoes",
     "Type! TYpe! HyPe!",
-    "Hello world"
+    "Hello world",
+    "The bast in class and tou know it!",
+    "Made with C#"
     };
 }
